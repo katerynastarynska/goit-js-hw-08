@@ -7,30 +7,25 @@ const emailInput = document.querySelector('.feedback-form  input');
 const formFeedbackData = {};
 
 formEl.addEventListener('input', throttle(onFormInput, 500));
-formEl.addEventListener('submit', onFormSubmit);
-
-populateFeedbackData();
+formEl.addEventListener("submit", handleSubmit);
 
 function onFormInput(event) {
     formFeedbackData[event.target.name] = event.target.value;
     localStorage.setItem(FEEDBACK_KEY, JSON.stringify(formFeedbackData));
-}
-
-function populateFeedbackData() {
+  }
+  populateFeedbackData();
+  function populateFeedbackData() {
     const feedbackSavedData = localStorage.getItem(FEEDBACK_KEY);
     const feedbackParsedData = JSON.parse(feedbackSavedData);
+        if (feedbackParsedData) {
+         emailInput.value = feedbackParsedData.email;
+         textareaInput.value = feedbackParsedData.message;
     
-    if (feedbackParsedData) {
-     emailInput.value = feedbackParsedData.email;
-     textareaInput.value = feedbackParsedData.message;
-
-     formFeedbackData.email = feedbackParsedData.email;
-     formFeedbackData.message = feedbackParsedData.message;
-     console.log(formFeedbackData);
-}}
-
-function onFormSubmit(event) {
+         formFeedbackData.email = feedbackParsedData.email;
+         formFeedbackData.message = feedbackParsedData.message;
+  }}
+function handleSubmit(event) {
     event.preventDefault();
     event.currentTarget.reset();
-    localStorage.removeItem(FEEDBACK_KEY);
+    console.log(formFeedbackData);
 }

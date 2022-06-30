@@ -23,9 +23,11 @@ function onFormInput(event) {
     
          formFeedbackData.email = feedbackParsedData.email;
          formFeedbackData.message = feedbackParsedData.message;
+
   }}
 function handleSubmit(event) {
     event.preventDefault();
     event.currentTarget.reset();
     console.log(formFeedbackData);
+    localStorage.removeItem(FEEDBACK_KEY);
 }

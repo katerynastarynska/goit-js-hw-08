@@ -4,7 +4,7 @@ const FEEDBACK_KEY = 'feedback-form-state';
 const formEl = document.querySelector('.feedback-form');
 const textareaInput = document.querySelector('.feedback-form  textarea');
 const emailInput = document.querySelector('.feedback-form  input');
-const formFeedbackData = {};
+let formFeedbackData = {};
 
 formEl.addEventListener('input', throttle(onFormInput, 500));
 formEl.addEventListener('submit', handleSubmit);
@@ -17,7 +17,7 @@ populateFeedbackData();
 
 function populateFeedbackData() {
     const feedbackSavedData = JSON.parse(localStorage.getItem(FEEDBACK_KEY));
-
+console.log(feedbackSavedData)
     if (feedbackSavedData && Object.keys(feedbackSavedData).length !== 0) {
         if (feedbackSavedData.email !== undefined) {
             emailInput.value = feedbackSavedData.email;
@@ -31,7 +31,8 @@ function populateFeedbackData() {
 }
 function handleSubmit(event) {
     event.preventDefault();
-    console.log('>>>> data >>>>', formFeedbackData);
+    console.log('data', formFeedbackData);
     event.currentTarget.reset();
     localStorage.removeItem(FEEDBACK_KEY);
+    formFeedbackData = {};
 }
